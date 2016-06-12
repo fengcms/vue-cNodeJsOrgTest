@@ -8,6 +8,7 @@
 
 ##项目目录说明
 
+```
 ├─index.shtml          渲染列表页面
 ├─content.shtml        渲染详情页面
 ├─inc                  碎片文件
@@ -30,3 +31,4 @@
         ├─style.css         编译好的css 文件
         ├─base
         └─scss
+```
