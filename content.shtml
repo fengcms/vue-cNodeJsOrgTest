@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>content - cnNodeJs.Org data & vue By FungLeo</title>
+	<meta name="keywords" content="cnNodeJs,vue,FungLeo">
+	<meta name="description" content="本页面是获取cnNodeJs公开API数据，通过vuejs进行渲染的DOME页面。用来展示FungLeo的前端技能。">
+	<!--#include virtual="inc/head.html"-->
+</head>
+<body>
+	<!--#include virtual="inc/header.html"-->
+	<section class="home">
+		<article class="article">
+			<h1 class="title">{{ data.title }}</h1>
+			<div class="date">
+				作者：<a v-bind:href="data.author.avatar_url" target="_blank" v-text="data.author.loginname"></a>
+				日期：{{ data.create_at | time }}
+			</div>
+			<div class="article_content" v-html="data.content"></div>
+			<h3 class="replies_title">留言评论</h3>
+			<ul class="list">
+				<li v-for="info in data.replies">
+					<i class="user_ico">
+						<img v-bind:src="info.author.avatar_url" v-bind:alt="info.author.loginname">
+						<span v-text="info.author.loginname"></span>
+					</i>
+					<time class="time" v-text="info.create_at | time"></time>
+					<div class="talk" v-html="info.content"></div>
+				</li>
+			</ul>
+		</article>
+		<!--#include virtual="inc/bar.html"-->
+	</section>
+	<!--#include virtual="inc/footer.html"-->
+</body>
+</html>
+<script>
+$(function(){
+	var id = getUrlId();
+	console.log(id)
+	var url = "http://cnodejs.org/api/v1/topic/"+id;
+	getJson(url,pushDom);
+})
+function pushDom(data){
+	/*
+		使用vue自定义过滤器把接口中传过来的时间进行整形
+	*/
+	Vue.filter('time', function (value) {
+		return goodTime(value);
+	})
+	console.log(data.data);
+	var vm = new Vue({
+		el: '.article',
+		data: data
+	});
+}
+</script>

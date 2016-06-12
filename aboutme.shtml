@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>about Fungleo - cnNodeJs.Org data & vue By FungLeo</title>
+	<meta name="keywords" content="FungLeo">
+	<meta name="description" content="前端工程师FungLeo的相关介绍。">
+	<!--#include virtual="inc/head.html"-->
+</head>
+<body>
+	<!--#include virtual="inc/header.html"-->
+	<section class="home">
+		<article class="article">
+			<h1 class="title">我的简介</h1>
+			<div class="date">
+				作者：FungLeo</a>
+				日期：2016.06.02
+			</div>
+			<div class="article_content">
+				<p><a href="http://blog.csdn.net/fungleo">我的博客</a></p>
+			</div>
+		</article>
+		<!--#include virtual="inc/bar.html"-->
+	</section>
+	<!--#include virtual="inc/footer.html"-->
+</body>
+</html>

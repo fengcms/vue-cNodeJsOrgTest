@@ -1,0 +1,53 @@
+.article {
+	width: 640px;float: left;
+	.title {
+		font-size: 24px;line-height: 1.5;color: $blue;
+	}
+	.date {
+		color: #999;line-height: 2;
+	}
+	.article_content {
+		margin-top: 10px;line-height: 2;color: $c22;
+		img {
+			display: block;max-width: 600px;max-height: 600px; border-radius: 10px;margin: 10px auto;
+			box-shadow:0 0 0 2px $cff, 3px 3px 5px rgba(#000,.5);
+		}
+		p {
+			padding: 5px 0;text-indent: 2em;
+		}
+		a {
+			color: $green;
+			&:hover {color: $cf60;}
+		}
+		table {
+			width: 100%;text-align: center;
+			&,th,td {border: 1px solid lighten($blue,50%);}
+			th {background: $blue;color: $cff;}
+			tr:nth-child(2n){
+				background: rgba($blue,.05);
+			}
+		}
+		h1,h2,h3,h4,h5,h6 {font-weight: bold;color: $blue;}
+		h4,h5,h6 {font-size: 13px;}
+		h3 {font-size: 14px;}
+		h2 {font-size: 16px;}
+		h1 {font-size: 18px;}
+		ol {
+			counter-reset:item;margin-top: 5px;
+			li {
+				line-height: 2;text-indent: 2em;
+				&:before {
+					content:counter(item)". "; 
+					counter-increment:item;
+				}
+			}
+		}
+	}
+	.replies_title {
+		margin: 20px 0;color: $cff;
+		line-height: 2;text-indent: 20px;border-radius: 5px;
+		@include jb(darken($blue,1%), lighten($blue,15%));
+		box-shadow: 0 0 0 1px $blue inset,0 0 0 2px rgba($cff,0.5) inset,0 0 5px rgba($blue,.5);
+		text-shadow:1px 1px 0 rgba($c00,.5);
+	}
+}

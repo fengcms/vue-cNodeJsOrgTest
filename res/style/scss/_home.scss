@@ -1,0 +1,161 @@
+
+html {
+	@include jb(lighten($blue,40%), $cff);
+	background-repeat: repeat-x;
+	background-size:auto 500px;
+}
+.header {
+	width: 960px;margin: 20px auto;
+	@include jb(darken($blue,5%), lighten($blue,10%));
+	border-radius: 10px;
+	box-shadow: 0 0 0 1px $blue inset,0 0 0 2px rgba($cff,0.5) inset,0 0 5px $blue;
+	@extend .cf;
+	.logo {
+		width: 240px;height: 80px;float: left;
+		background:url("http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg") center/200px auto no-repeat;
+		a {
+			display: block;text-indent: -9999px;width: 240px;height: 80px;
+		}
+	}
+	.nav {
+		width: 550px;float: right;
+		ul {
+			@extend .cf;
+			padding: 20px 0;
+		}
+		li {
+			float: left;margin-right: 2px;
+			a {
+				display: block;height: 40px;line-height: 40px;
+				padding: 0 20px;font-size: 16px;color: $cff;
+				border-radius: 5px;
+				text-shadow:1px 1px 0 rgba($c00,.5);
+				@include dz();
+				&:hover {
+					background:rgba($c00,.2);box-shadow: 1px 1px 3px rgba($c00,.2) inset;
+				}
+				&.on {
+					background:rgba($c00,.5);
+					box-shadow: 1px 1px 3px rgba($c00,.5) inset;
+				}
+			}
+		}
+	}
+}
+
+.home {
+	width: 960px;margin: 20px auto;position: relative;
+	@extend .cf;
+	.main {width: 640px;float: left;}
+	.list {
+		li {
+			position: relative;padding: 10px 0px 10px 100px;min-height: 60px;
+			border-bottom: 1px dotted rgba($blue,.1);
+			.user_ico {
+				position: absolute;left: 0;top: 10px;display: block;width: 90px;
+				img {
+					width: 40px;height: 40px;border-radius: 50%;display: block;margin: 0 auto 5px;
+					box-shadow: 0 0 0 1px rgba($cff,0.5), 1px 1px 3px rgba($c00,0.5);
+					@include dz();
+					&:hover {
+						@include fd(1.3);
+					}
+				}
+				span {
+					@include oneline(15px);
+					text-align: center;display: block;color: $blue;
+					text-shadow:1px 1px 0px $cff,1px 1px 2px rgba($c00,0.3);
+				}
+			}
+			time {
+				color: #999;font-size: 12px;display: none;
+				@include fd(0.85);position: absolute;right: 0;top: -5px;z-index: 1;
+			}
+			.talk {
+				display: block;padding:10px 15px;line-height: 2;clear: both;border-radius: 10px;
+				@include jb($cff, $cf0);@include dz(.15s);
+				box-shadow: 0 0 0 1px $cee inset,0 0 0 2px rgba($cff,0.5) inset;
+				text-shadow:1px 1px 1px $cff;
+				position: relative;
+				&:before {
+					content: "";display: block;width: 10px;height: 10px;background: $cff;
+					position: absolute;left: -3px;top: 18px;
+					@include xz(45);
+					@include jb($cff, $cf0,-45);
+					box-shadow: -1px 1px $cee,1px -1px rgba($cff,0.5) inset;
+				}
+				&:hover {
+					color: $cff;
+					@include jb(darken($green,1%), darken($green,5%));
+					box-shadow: 0 0 0 1px $green inset,0 0 0 2px rgba($cff,0.3) inset;
+					text-shadow:1px 1px 1px rgba($c00,0.5);
+					&:before {
+						@include jb(darken($green,1%), darken($green,5%),-45);
+						box-shadow: -1px 1px $green,1px -1px rgba($cff,0.3) inset,1px 1px darken($green,5%),-1px 1px darken($green,5%) inset;
+					}
+				}
+				img {max-width: 500px;max-height: 500px;}
+			}
+			&:hover {
+				time {display: block;}
+			}
+		}
+	}
+	.page {
+		margin: 20px 0;text-align: center;
+	}
+	.bar {
+		width: 280px;float: right;
+		&.fixed{position: fixed;top: 0;left: 50%;margin-left: 200px;}
+		h3 {font-size: 15px;color: $blue;margin-top: 10px;}
+		ol {
+			counter-reset:item;margin-top: 5px;
+			li {
+				line-height: 2;
+				&:before {
+					content:counter(item)". "; 
+					counter-increment:item;
+				}
+			}
+		}
+		code {
+			background:rgba($c00,.5);color: $cff;padding: 0 5px;margin: 0 5px;
+			display: inline-block;line-height: 1.4;border-radius: 5px;
+		}
+		a {
+			color: $green;margin: 0 5px;
+			&:hover {color: $cf60;}
+		}
+	}
+}
+.go_top {
+	position: fixed;width: 50px;height: 50px;
+	left: 50%;bottom: 100px;margin-left: 490px;
+	border-radius: 10px;background:rgba($c00,.5);
+	cursor: pointer;display: none;
+	&:before,&:after{
+		content: "";display: block;position: absolute;
+	}
+	&:before {
+		width: 0;height: 0;top: 10px;left: 10px;
+		border-width: 0 15px 15px;
+		border-color:transparent transparent $cff;
+		border-style: solid;
+	}
+	&:after {
+		width: 16px;height: 15px;background:$cff;
+		bottom: 10px;left: 50%;margin-left: -8px;
+	}
+}
+
+.copy {
+	text-align: center;line-height: 2;color: $c99;margin: 20px;
+}
+
+
+
+
+
+
+
+

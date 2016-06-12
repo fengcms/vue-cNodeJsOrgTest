@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>cnNodeJs.Org data & vue By FungLeo</title>
+	<meta name="keywords" content="cnNodeJs,vue,FungLeo">
+	<meta name="description" content="本页面是获取cnNodeJs公开API数据，通过vuejs进行渲染的DOME页面。用来展示FungLeo的前端技能。">
+	<!--#include virtual="inc/head.html"-->
+</head>
+<body>
+	<!--#include virtual="inc/header.html"-->
+	<section class="home">
+		<section class="main">
+			<ul class="list">
+				<li v-for="info in data">
+					<i class="user_ico">
+						<img v-bind:src="info.author.avatar_url" v-bind:alt="info.author.loginname">
+						<span v-text="info.author.loginname"></span>
+					</i>
+					<time class="time"  v-text="info.create_at | time"></time>
+					<a class="talk" href="content.html?{{ info.id }}">{{ info.title }}</a>
+				</li>
+			</ul>
+			<div class="page"></div>
+		</section>
+		<!--#include virtual="inc/bar.html"-->
+	</section>
+	<!--#include virtual="inc/footer.html"-->
+</body>
+</html>
+<script>
+$(function(){
+	var id = getUrlId();
+	console.log(id);
+	var url = "http://cnodejs.org/api/v1/topics?page="+id;
+	getJson(url,pushDom);
+	laypage({
+		cont: $(".page"),
+		pages: 100,
+		curr: id, 
+		jump: function(e, first){ //触发分页后的回调
+			if(!first){ //一定要加此判断，否则初始时会无限刷新
+				location.href = '?'+e.curr;
+			}
+		}
+	});
+})
+function pushDom(data){
+	/*
+		使用vue自定义过滤器把接口中传过来的时间进行整形
+	*/
+	Vue.filter('time', function (value) {
+		return goodTime(value);
+	})
+	console.log(data.data);
+	var vm = new Vue({
+		el: '.list',
+		data: data
+	});
+}
+</script>
