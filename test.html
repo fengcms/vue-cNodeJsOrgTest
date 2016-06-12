@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="res/style/style.css">
 <script src="res/js/jquery/jquery-2.2.3.min.js"></script>
 <script src="res/js/vue/vue.min.js"></script>
+<script src="res/js/plugins/laypage/laypage.js"></script>
 <script src="res/js/common/common.js"></script>
 </head>
 <body>
@@ -34,7 +35,7 @@
                         <span v-text="info.author.loginname"></span>
                     </i>
                     <time class="time" v-text="info.create_at"></time>
-                    <a class="talk" href="content.html?{{ info.id }}" v-text="info.title"></a>
+                    <a class="talk" href="content.shtml?{{ info.id }}" v-text="info.title"></a>
                 </li>
             </ul>
             <div class="page"></div>
@@ -52,8 +53,19 @@
 </html>
 <script>
 $(function(){
-    var url = "http://cnodejs.org/api/v1/topics";
+    var id = getUrlId();
+    var url = "http://cnodejs.org/api/v1/topics?page="+id;
     getJson(url,pushDom);
+    laypage({
+        cont: $(".page"),
+        pages: 100,
+        curr: id,
+        jump: function(e, first){
+            if(!first){
+                location.href = '?'+e.curr;
+            }
+        }
+    });
 });
 function pushDom(data){
     // 先进行遍历,把数据中的所有时间全部修改一遍

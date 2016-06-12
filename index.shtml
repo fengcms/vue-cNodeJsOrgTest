@@ -18,7 +18,7 @@
 						<span v-text="info.author.loginname"></span>
 					</i>
 					<time class="time"  v-text="info.create_at | time"></time>
-					<a class="talk" href="content.html?{{ info.id }}">{{ info.title }}</a>
+					<a class="talk" href="content.shtml?{{ info.id }}">{{ info.title }}</a>
 				</li>
 			</ul>
 			<div class="page"></div>
