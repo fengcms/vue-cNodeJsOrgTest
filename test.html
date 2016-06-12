@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>cnNodeJs.Org data &amp; vue By FungLeo</title>
+<meta name="keywords" content="cnNodeJs,vue,FungLeo">
+<meta name="description" content="本页面是获取cnNodeJs公开API数据，通过vuejs进行渲染的DOME页面。用来展示FungLeo的前端技能。">
+<link rel="stylesheet" href="res/style/style.css">
+<script src="res/js/jquery/jquery-2.2.3.min.js"></script>
+<script src="res/js/vue/vue.min.js"></script>
+<script src="res/js/common/common.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">
+            <a href="index.html" title="cnNodeJs.Org Home By FungLeo">cnNodeJs.Org Home By FungLeo</a>
+        </h1>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.shtml" class="on">首页</a></li>
+                <li><a href="//blog.csdn.net/fungleo" target="_blank">我的博客</a></li>
+                <li><a href="//www.fengcms.com/" title="我开发的CMS系统" target="_blank">FengCMS</a></li>
+                <li><a href="//cnodejs.org/" target="_blank">cnodejs官方</a></li>
+                <li><a href="aboutme.shtml">我的简介</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="home">
+        <section class="main">
+            <ul class="list">
+                <li v-for="info in data">
+                    <i class="user_ico">
+                        <img v-bind:src="info.author.avatar_url" v-bind:alt="info.author.loginname">
+                        <span v-text="info.author.loginname"></span>
+                    </i>
+                    <time class="time" v-text="info.create_at"></time>
+                    <a class="talk" href="content.html?{{ info.id }}" v-text="info.title"></a>
+                </li>
+            </ul>
+            <div class="page"></div>
+        </section>
+        <aside class="bar">
+            <h3>本页说明</h3>
+            ...
+        </aside>
+    </section>
+    <footer class="copy">
+       版权说明
+    </footer>
+    <div class="go_top"></div>
+</body>
+</html>
+<script>
+$(function(){
+    var url = "http://cnodejs.org/api/v1/topics";
+    getJson(url,pushDom);
+});
+function pushDom(data){
+    // 先进行遍历,把数据中的所有时间全部修改一遍
+    for (var i = 0; i < data.data.length; i++) {
+        data.data[i].create_at = goodTime(data.data[i].create_at);
+    };
+    // 然后再交给 vue 进行渲染
+    var vm = new Vue({
+        el: '.list',
+        data: data
+    });
+}
+</script>

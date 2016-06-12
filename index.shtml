@@ -52,7 +52,6 @@ function pushDom(data){
 	Vue.filter('time', function (value) {
 		return goodTime(value);
 	})
-	console.log(data.data);
 	var vm = new Vue({
 		el: '.list',
 		data: data
