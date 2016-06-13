@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>url路径测试</title>
+	<!--#include virtual="inc/head.html"-->
+</head>
+<body>
+	<!--#include virtual="inc/header.html"-->
+	<section class="home">
+		<section class="main">
+			测试测试
+		</section>
+		<!--#include virtual="inc/bar.html"-->
+	</section>
+	<!--#include virtual="inc/footer.html"-->
+</body>
+</html>
+<script>
+$(function(){
+	// console.log(funcUrl("page","5"));
+	funcUrl("page","5")
+});
+
+function funcUrl(name,value){
+	if (!!value) {
+		var loca = window.location;
+		var obj = {};
+		var baseUrl = loca.origin + loca.pathname;
+		var query = loca.search.substr(1);
+		var queryArr = query.split("&");
+		for (var i = 0; i < queryArr.length; i++) {
+			queryArr[i] = queryArr[i].split("=");
+			obj[queryArr[i][0]] = queryArr[i][1]
+		};
+		obj[name] = value;
+		console.log(obj)
+		console.log(obj[name])
+	}else{
+		return GetQueryString(name);
+	};
+}
+
+
+function GetQueryString(name){
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+
+</script>

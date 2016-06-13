@@ -31,7 +31,6 @@
 <script>
 $(function(){
 	var id = getUrlId();
-	console.log(id);
 	var url = "http://cnodejs.org/api/v1/topics?page="+id;
 	getJson(url,pushDom);
 	laypage({
