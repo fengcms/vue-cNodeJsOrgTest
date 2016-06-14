@@ -11,6 +11,7 @@
 ```
 ├─index.shtml          渲染列表页面
 ├─content.shtml        渲染详情页面
+├─url.shtml            测试url 方法页面
 ├─inc                  碎片文件
 │   ├─bar.html             侧边栏代码
 │   ├─footer.html          版权部分代码

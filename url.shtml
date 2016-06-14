@@ -18,34 +18,35 @@
 </html>
 <script>
 $(function(){
-	// console.log(funcUrl("page","5"));
-	funcUrl("page","5")
+	console.log(funcUrl("page","5"));
+	funcUrl("aaa","5");
 });
 
 function funcUrl(name,value){
+	var loca = window.location;
+	var baseUrl = loca.origin + loca.pathname + "?";
+	var query = loca.search.substr(1);
 	if (!!value) {
-		var loca = window.location;
 		var obj = {};
-		var baseUrl = loca.origin + loca.pathname;
-		var query = loca.search.substr(1);
-		var queryArr = query.split("&");
-		for (var i = 0; i < queryArr.length; i++) {
-			queryArr[i] = queryArr[i].split("=");
-			obj[queryArr[i][0]] = queryArr[i][1]
+		var url;
+		if (query=="") {
+			url = baseUrl + name + "=" + value;
+		}else{
+			var queryArr = query.split("&");
+			for (var i = 0; i < queryArr.length; i++) {
+				queryArr[i] = queryArr[i].split("=");
+				obj[queryArr[i][0]] = queryArr[i][1]
+			};
+			obj[name] = value;
+			url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
 		};
-		obj[name] = value;
-		console.log(obj)
-		console.log(obj[name])
+		console.log(url);
+		return url;
 	}else{
-		return GetQueryString(name);
+		var val = query.match(new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"));
+		return val!=null ? unescape(val[2]) : null;
 	};
 }
 
-
-function GetQueryString(name){
-     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r = window.location.search.substr(1).match(reg);
-     if(r!=null)return  unescape(r[2]); return null;
-}
 
 </script>

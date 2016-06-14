@@ -78,3 +78,38 @@ function getUrlId(){
 	// return isNaN(id) ? 1 : id;
 	return id;
 }
+
+
+/*
+	url 方法
+	funcUrl(name) 			返回 url 中 name 的值
+	funcUrl(name,value) 	如果 url 中有 name 则更新 name 的值
+							如果 url 中没有 name 则追加 name 的值
+	如果url中的 name 是重复的,则会去重
+	去重后,它的值是最后一次出现的值
+	如果重复的值是 name 则值是 value
+*/
+function funcUrl(name,value){
+	var loca = window.location;
+	var baseUrl = loca.origin + loca.pathname + "?";
+	var query = loca.search.substr(1);
+	if (!!value) {
+		var obj = {};
+		var url;
+		if (query=="") {
+			url = baseUrl + name + "=" + value;
+		}else{
+			var queryArr = query.split("&");
+			for (var i = 0; i < queryArr.length; i++) {
+				queryArr[i] = queryArr[i].split("=");
+				obj[queryArr[i][0]] = queryArr[i][1]
+			};
+			obj[name] = value;
+			url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
+		};
+		return url;
+	}else{
+		var val = query.match(new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"));
+		return val!=null ? unescape(val[2]) : null;
+	};
+}
