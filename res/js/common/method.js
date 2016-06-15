@@ -82,34 +82,44 @@ function getUrlId(){
 
 /*
 	url 方法
+	funcUrl()				返回 window.location.search 值 不包含 ? 号
 	funcUrl(name) 			返回 url 中 name 的值
 	funcUrl(name,value) 	如果 url 中有 name 则更新 name 的值
 							如果 url 中没有 name 则追加 name 的值
 	如果url中的 name 是重复的,则会去重
 	去重后,它的值是最后一次出现的值
 	如果重复的值是 name 则值是 value
+
+	funcUrl(name,value,type)
+	第三个 type 可以为空,为空时返回完整的url, 如 http://www.nodebbs.com/url.shtml?page=5&a=3&b=4&c=aa
+	不为空时,返回 page=5&a=3&b=4&c=aa
+
 */
-function funcUrl(name,value){
+function funcUrl(name,value,type){
 	var loca = window.location;
-	var baseUrl = loca.origin + loca.pathname + "?";
+	var baseUrl = type==undefined ? loca.origin + loca.pathname + "?" : "";
 	var query = loca.search.substr(1);
-	if (!!value) {
-		var obj = {};
-		var url;
-		if (query=="") {
-			url = baseUrl + name + "=" + value;
-		}else{
-			var queryArr = query.split("&");
-			for (var i = 0; i < queryArr.length; i++) {
-				queryArr[i] = queryArr[i].split("=");
-				obj[queryArr[i][0]] = queryArr[i][1]
-			};
-			obj[name] = value;
-			url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
-		};
-		return url;
-	}else{
+	// 如果没有传参,就返回 search 值 不包含问号
+	if (name==undefined) { return query }
+	// 如果没有传值,就返回要查询的参数的值
+	if (value==undefined){
 		var val = query.match(new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"));
 		return val!=null ? unescape(val[2]) : null;
 	};
+	var url;
+	if (query=="") {
+		// 如果没有 search 值,则返回追加了参数的 url
+		url = baseUrl + name + "=" + value;
+	}else{
+		// 如果没有 search 值,则在其中修改对应的值,并且去重,最后返回 url
+		var obj = {};
+		var arr = query.split("&");
+		for (var i = 0; i < arr.length; i++) {
+			arr[i] = arr[i].split("=");
+			obj[arr[i][0]] = arr[i][1];
+		};
+		obj[name] = value;
+		url = baseUrl + JSON.stringify(obj).replace(/[\"\{\}]/g,"").replace(/\:/g,"=").replace(/\,/g,"&");
+	};
+	return url;
 }
